@@ -1,0 +1,100 @@
+* {box-sizing:border-box; }
+#opening {
+    position:absolute;
+    top: 30%; left: 50%;
+    transform:translateX(-50%);
+    display:block;
+    color:white;
+    font-size:20rem;
+    animation: disappear 1.25s;
+    opacity:0;
+}
+@keyframes disappear{
+    50% {opacity:1}
+    75% {opacity:1}
+    100% {opacity:0}
+}
+
+.hitcount {
+    position:absolute; 
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    top:20px;
+    width:100px; height:100px;
+    font-size: 2em;
+    font-weight: bold;
+    /* border:1px solid blue; */
+}
+
+.skillBox{
+    position:absolute; 
+    width:60px; height:60px;
+    border:1px solid #000;
+    justify-content: space-between;
+}
+
+#p1Hit { left:3%; color: red }
+#p2Hit { right:3%; color:blue; }
+#timer {
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    margin:0px auto;
+    width:130px; height:130px;
+    background-color:rgba(215,255,0, 0.15); 
+    border-radius: 50%;
+    font-size: 50px;
+    font-weight:bold;
+    color:black;
+}
+#result {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    top:0; right:0; bottom:0; left:0;
+    color: white;
+    font-size:36px;
+    display:none;
+}
+#replay {
+    position:absolute;
+    top:56%; left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 40px;
+    color:white;
+    font-size:22px;
+    display:flex;
+    background-color: black;
+    cursor: pointer;
+    display: none;
+}
+#replay:hover {
+    opacity:0.6;
+}
+
+#displayControls {
+    position:absolute; 
+    top:10%;
+    padding:3%;
+    display:flex;
+    justify-content: space-between;
+    margin-top: 30px; 
+    width:100%; height:100px;
+    opacity:0.25;
+}
+.controls { 
+    /* border:1px solid #000; */
+    font-size:1.2rem;
+}
+.keyboardKeys{
+    display:inline-block;
+    width:40px; height:40px;
+    padding-top:11px;
+    transform:translateX(-50%);
+    font-weight:bold;
+    line-height: 10px;
+    text-align: center;
+    border:3px solid #000;
+    border-radius:20%;
+}
