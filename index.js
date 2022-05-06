@@ -18,7 +18,12 @@ const sidemove = 10
 const bodyWidth = 54
 const bodyHeight = 160
 const handWidth = 120
-const handHeight = 44
+const handHeight = 30
+
+// Control: Skill
+const skilltime = 5000
+const cooltime = 12000 // actual cooltime: 7000
+
 
 // Class Constructor for a new player in the game
 class Player {
@@ -41,6 +46,10 @@ class Player {
         this.isAttacking
         this.score = score
         this.healthbar = bodyWidth
+        this.skill = {
+            available: true,
+            active: false
+        }
     }
 
     draw() {
@@ -54,9 +63,9 @@ class Player {
         }
     }
 
-    update() {
+    update(extraLength = 0) {
         this.draw() 
-        this.attackBox.position.x = this.position.x - this.attackBox.offset.x
+        this.attackBox.position.x = this.position.x - this.attackBox.offset.x - extraLength
         this.attackBox.position.y = this.position.y
 
         this.position.x += this.velocity.x
@@ -87,6 +96,25 @@ class Player {
         setTimeout(() => {
             this.isAttacking = false
         }, 100)
+    }
+
+    useSkill() {
+        if (this.skill.available){
+            this.isAttacking = true
+            this.attackBox.width = 240
+            this.attackBox.height = 60
+            this.skill.active = true
+            this.skill.available = false
+        }
+        setTimeout(() => {
+            this.isAttacking = false
+            this.attackBox.width = handWidth
+            this.attackBox.height = handHeight
+            this.skill.active = false
+        }, skilltime)
+        setTimeout(() => {
+            this.skill.available = true
+        }, cooltime)
     }
 }
 
@@ -153,7 +181,7 @@ function collisionDetected({ rectangle1, rectangle2 }) {
     )
 }
 
-function determineWinner({playerOne, playerTwo, timerId }) {
+function determineWinner({ playerOne, playerTwo, timerId }) {
     clearTimeout(timerId)
     document.querySelector('#result').style.display = 'flex'
     document.querySelector('#replay').style.display = 'block'
@@ -167,6 +195,7 @@ function determineWinner({playerOne, playerTwo, timerId }) {
     else if (playerOne.score < playerTwo.score) {
         document.querySelector('#result').innerHTML = 'Blue Win'
     }
+    exit
 }
 
 let timerId
@@ -186,7 +215,9 @@ function animate() {
     c.fillStyle = 'skyblue'
     c.fillRect(0, 0, canvas.width, canvas.height)
     playerOne.update()
-    playerTwo.update()
+    if (playerTwo.skill.active === false) {
+        playerTwo.update(0)
+    } else playerTwo.update(120)
 
     // PlayerOne Movement
     playerOne.velocity.x = 0
@@ -242,6 +273,9 @@ window.addEventListener('keydown', (event) => {
         case 's':
             playerOne.attack()                      // Attack
             break
+        case 'q':
+            playerOne.useSkill()                    // Skill
+            break
     }
 
     // PlayerTwo Keys 
@@ -260,10 +294,14 @@ window.addEventListener('keydown', (event) => {
         case 'ArrowDown':                           // Attack
             playerTwo.attack()
             break
+        case '/':
+            playerTwo.useSkill()                    // Skill
+            break
     }
     // console.log(event.key);
 })
 
+// Additional key controls for smooth and perfect movement 
 window.addEventListener('keyup', (event) => {
     // (Default / Unpressed) PlayerOne Keys 
     switch (event.key) {
