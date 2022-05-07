@@ -1,4 +1,5 @@
-* {box-sizing:border-box; }
+* {box-sizing:border-box;}
+
 #opening {
     position:absolute;
     top: 30%; left: 50%;
@@ -15,6 +16,15 @@
     100% {opacity:0}
 }
 
+#gamebox{
+    position:relative;
+}
+#topbox{
+    position:absolute; 
+    top:4%; 
+    width:100%; height: 180px; 
+}
+
 .hitcount {
     position:absolute; 
     display:flex;
@@ -29,9 +39,16 @@
 
 .skillBox{
     position:absolute; 
-    width:60px; height:60px;
+    top:0;
+    width:120px; height:40px;
     border:1px solid #000;
     justify-content: space-between;
+}
+.p1 {
+    left:50px;
+}
+.p2{
+    right:2%;
 }
 
 #p1Hit { left:3%; color: red }

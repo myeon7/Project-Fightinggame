@@ -24,7 +24,6 @@ const handHeight = 30
 const skilltime = 5000
 const cooltime = 12000 // actual cooltime: 7000
 
-
 // Class Constructor for a new player in the game
 class Player {
     constructor({position, velocity, color, offset, score=0}) {
@@ -48,15 +47,22 @@ class Player {
         this.healthbar = bodyWidth
         this.skill = {
             available: true,
-            active: false
+            active: false,
+            powerbar: this.width,
+            color: 'gray',
         }
     }
 
     draw() {
+        // Skill Power Bar Overhead
+        c.fillStyle = this.skill.color
+        c.fillRect(this.position.x, this.position.y-20, this.skill.powerbar, 10)
+
+        // Character Appearance
         c.fillStyle = this.color.body
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
 
-        // attackbox 
+        // Attack Hand Appearance 
         if (this.isAttacking) {
             c.fillStyle = this.color.hand
             c.fillRect(this.attackBox.position.x, this.attackBox.position.y+35, this.attackBox.width, this.attackBox.height)
@@ -70,6 +76,13 @@ class Player {
 
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
+
+        this.skill.powerbar += 0.075
+
+        if (this.skill.powerbar >= this.width) {
+            this.skill.color = 'gold'
+            this.skill.powerbar = this.width
+        }
 
         // Fall on the ground
         if (this.position.y + this.height + this.velocity.y >= canvas.height){
@@ -100,14 +113,14 @@ class Player {
 
     useSkill() {
         if (this.skill.available){
-            this.isAttacking = true
+            this.skill.powerbar = 0
+            this.skill.color = 'gray'
             this.attackBox.width = 240
             this.attackBox.height = 60
             this.skill.active = true
             this.skill.available = false
         }
         setTimeout(() => {
-            this.isAttacking = false
             this.attackBox.width = handWidth
             this.attackBox.height = handHeight
             this.skill.active = false
@@ -195,7 +208,6 @@ function determineWinner({ playerOne, playerTwo, timerId }) {
     else if (playerOne.score < playerTwo.score) {
         document.querySelector('#result').innerHTML = 'Blue Win'
     }
-    exit
 }
 
 let timerId

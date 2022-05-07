@@ -4,22 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini-Game</title>
+    <title>MY's FightBox</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div style="position: relative;">
+    <div id="gamebox">
         <div id="opening">Fight!</div>
-        <div style="position:absolute; top:4%; width:100%; height: 180px;"> 
-            <div>
-                <!-- <div class="skillBox p1"></div> -->
-                <div id="p1Hit" class="hitcount">Hit:&nbsp <span id="p1Score">0</span>/20</div>
-            </div>
+        <div id="topbox"> 
+            <div id="p1Hit" class="hitcount">Hit:&nbsp <span id="p1Score">0</span>/20</div>
             <div id="timer">10</div>
-            <div>
-                <!-- <div class="skillBox p2"></div> -->
-                <div id="p2Hit" class="hitcount">Hit:&nbsp<span id="p2Score">0</span>/20</div>
-            </div>
+            <div id="p2Hit" class="hitcount">Hit:&nbsp<span id="p2Score">0</span>/20</div>
         </div> 
         <div id="result">Tie</div>
         <button id="replay" onClick="window.location.reload();">Replay</button>
@@ -42,7 +36,6 @@
         </div>
         <canvas></canvas> 
     </div>
-
     <script src="index.js"></script>
 </body>
 </html>
